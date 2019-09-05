@@ -178,10 +178,12 @@ def wehub_api():
 
 		if appid is None or action is None or wxid is None:
 			rsp_dict = {"error_code":1,"error_reason":'参数错误',"data":{}}
+			app.logger.error(rsp_dict)
 			return  demjson.encode(rsp_dict)
 
 		error_code, error_reason,ack_data,ack_type = main_req_process(wxid,action,req_data_dict)
 		ack_dict= {'error_code':error_code,'error_reason':error_reason,'ack_type':str(ack_type),'data':ack_data}
+		app.logger.info("wehub desktop respone: {}".format(ack_data_dict))
 		rsp_data= demjson.encode(ack_dict)
 		return rsp_data
 	else:
