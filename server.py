@@ -183,7 +183,7 @@ def wehub_api():
 
 		error_code, error_reason,ack_data,ack_type = main_req_process(wxid,action,req_data_dict)
 		ack_dict= {'error_code':error_code,'error_reason':error_reason,'ack_type':str(ack_type),'data':ack_data}
-		app.logger.info("wehub desktop respone: {}".format(ack_data_dict))
+		app.logger.info("wehub desktop respone: {}".format(ack_dict))
 		rsp_data= demjson.encode(ack_dict)
 		return rsp_data
 	else:
