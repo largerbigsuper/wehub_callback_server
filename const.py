@@ -40,7 +40,7 @@ S_OK = 0
 S_FAIL = 1
 
 FIX_REQUEST_TYPES = ['login','logout','pull_task']
-SECRET_KEY = "celnpxMPRZ7"    #换成自己的secret_key
+SECRET_KEY = "celnpxMPRZ7@"    #换成自己的secret_key
 TEST_WXID = "wxid_smrapzzeruvp21"    #换成自己的测试小号
 UPLOAD_FOLDER = 'wehub_uploads_folder'     #上传的文件的存放地址,换成服务端的文件存储路径
 SERVER_HOST = '0.0.0.0'
