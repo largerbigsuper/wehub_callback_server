@@ -11,6 +11,8 @@ import hashlib
 app = Flask(__name__)
 app.logger.setLevel(logging.INFO)
 
+from qiniucloud import QiniuService
+
 
 #主要的逻辑处理
 def main_req_process(wxid,action,request_data_dict):
@@ -33,7 +35,7 @@ def main_req_process(wxid,action,request_data_dict):
 				'heartbeat_interval':30
 			}
 		}
-		# ack_data_dict.update({'extension_protocol':protocol_dict})
+		ack_data_dict.update({'extension_protocol':protocol_dict})
 		#验证签名
 		if len(nonce)>0:
 			nonce_str = str(wxid)+'#'+str(nonce)+'#'+str(const.SECRET_KEY)
@@ -207,13 +209,11 @@ def upload_file():
 			rt_dict.update({'error_code':1,'error_reason':'no file upload'})
 			return demjson.encode(rt_dict)
 
-		if not os.path.exists(const.UPLOAD_FOLDER):
-			os.makedirs(const.UPLOAD_FOLDER)
+		file_data = request.files['file']
+		file_type = file_data.name.split('.')[-1]
+		file_name = hashlib.md5(file_index.encode('utf8')).hexdigest() + '.' + file_type
 
-		file = request.files['file']
-		app.logger.info("file info:{0}".format(file.__dict__))
-		file.save(os.path.join(const.UPLOAD_FOLDER,file.filename)) 
-
+		path = QiniuService.upload_data(file_data, file_name)
 		app.logger.info("upload result = {0}".format(rt_dict))
 		return demjson.encode(rt_dict)
 	else:
