@@ -210,7 +210,7 @@ def upload_file():
 			return demjson.encode(rt_dict)
 
 		file_data = request.files['file']
-		file_type = file_data.name.split('.')[-1]
+		file_type = file_data.filename.split('.')[-1]
 		file_name = hashlib.md5(file_index.encode('utf8')).hexdigest() + '.' + file_type
 
 		path = QiniuService.upload_data(file_data, file_name)
