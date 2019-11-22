@@ -74,6 +74,7 @@ class QiniuService:
         if info.status_code == 200:
             base_url = '%s%s' % (QiniuService.bucket_domain_dict['image'], ret.get("key"))
             # 表示上传成功, 返回文件名
+            cls.logger.error('base_url: {}'.format(base_url))
             return base_url
 
         else:
